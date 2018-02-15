@@ -1,0 +1,15 @@
+{
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "Scripts for data loading into Dynamodb",
+  "main": "inserts.js",
+  "dependencies": {
+    "aws-sdk": "^2.188.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "npm install aws-sdk"
+  },
+  "author": "",
+  "license": "ISC"
+}
