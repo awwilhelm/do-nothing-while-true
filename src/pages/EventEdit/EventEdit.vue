@@ -7,32 +7,29 @@
           <li v-for="(error, index) in errors" :key="`error-${index}`">{{ error }}</li>
         </ul>
       </p>
-      <div>
+      <div v-if="isLoaded">
         <span>Orginization Name: </span> <span>{{item.orgName}}</span>
       </div>
-      <div>
-        <span>Title</span> <input v-model="item.title"/>
+      <div v-if="isLoaded">
+        <span>Title</span> <input v-model="item.events[$route.params.eventid].title"/>
       </div>
-      <div>
-        <span>Description</span> <input v-model="item.description"/>
+      <div v-if="isLoaded">
+        <span>Description</span> <input v-model="item.events[$route.params.eventid].description"/>
       </div>
-      <div>
-        <span>Orginization Link</span> <input v-model="item.orgLink"/>
+      <div v-if="isLoaded">
+        <span>Repeating</span> <input v-model="item.events[$route.params.eventid].repeating"/>
       </div>
-      <div>
-        <span>Repeating</span> <input v-model="item.repeating"/>
+      <div v-if="isLoaded">
+        <span>Start</span> <input v-model="item.events[$route.params.eventid].start"/>
       </div>
-      <div>
-        <span>Start</span> <input v-model="item.start"/>
+      <div v-if="isLoaded">
+        <span>End</span> <input v-model="item.events[$route.params.eventid].end"/>
       </div>
-      <div>
-        <span>End</span> <input v-model="item.end"/>
+      <div v-if="isLoaded">
+        <span>Date</span> <input v-model="item.events[$route.params.eventid].date"/>
       </div>
-      <div>
-        <span>Date</span> <input v-model="item.date"/>
-      </div>
-      <div>
-        <span>Location</span> <input v-model="item.location"/>
+      <div v-if="isLoaded">
+        <span>Location</span> <input v-model="item.events[$route.params.eventid].location"/>
       </div>
       <button type="submit">Submit</button>
     </form>

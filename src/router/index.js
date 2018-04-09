@@ -1,24 +1,34 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import HelloWorld from '@/components/HelloWorld/HelloWorld.vue';
+import vueCookies from 'vue-cookies';
+import Speak from '@/pages/Speak/Speak.vue';
+import Help from '@/pages/Help/Help.vue';
+import SpeakResult from '@/pages/SpeakResult/SpeakResult.vue';
 import EventList from '@/pages/EventList/EventList.vue';
 import EventCreate from '@/pages/EventCreate/EventCreate.vue';
 import EventEdit from '@/pages/EventEdit/EventEdit.vue';
 import Login from '@/pages/Login/Login.vue';
 import TableList from '@/components/TableList/TableList.vue';
+import docClient from '@/services/aws.js';
 
 Vue.use(Router);
-
-Vue.component('test', {
-  template: TableList,
-});
 
 const router = new Router({
   routes: [
     {
       path: '/user',
-      name: 'HelloWorld1',
-      component: HelloWorld,
+      name: '',
+      component: Speak,
+    },
+    {
+      path: '/user/help',
+      name: '',
+      component: Help,
+    },
+    {
+      path: '/user/speakresult',
+      name: '',
+      component: SpeakResult,
     },
     {
       path: '/client/login',
@@ -63,10 +73,31 @@ router.beforeEach((to, from, next) => {
   console.log(from);
   console.log(to);
   const authRequired = to.matched.some((route) => route.meta.auth);
-  const authed = true;
-  // const authed = store.state.user.isAuthorized
-  if (authRequired && !authed) {
-    next('/client/login');
+
+  if(authRequired) {
+    if(window.$cookies.isKey("username") && window.$cookies.isKey("password"))
+    {
+      var userParams = {
+        TableName: 'OrganizationEvents',
+        Key: {
+          "username": window.$cookies.get("username"),
+        }
+      }
+      docClient.get(userParams, function (err, user) {
+        if (err) {
+          console.log("Error", err);
+          next('/client/login');
+        } else {
+          if(user.Item.password == window.$cookies.get("password")) {
+            next();
+          } else {
+            next('/client/login');
+          }
+        }
+      });
+    } else {
+      next('/client/login');
+    }
   } else {
     next();
   }

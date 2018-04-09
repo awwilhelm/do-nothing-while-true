@@ -3,32 +3,57 @@ import docClient from '@/services/aws.js';
 
 export default {
   data: function() {
+    data.item = {};
+    var params = {
+      TableName: 'OrganizationEvents',
+      Key: {
+        "username": this.$cookies.get("username")
+      }
+    };
+
+    docClient.get(params, function(err, newData) {
+      if (err) {
+        console.log("Error", err);
+      } else {
+        data.oldItem = newData.Item;
+        console.log(data);
+      }
+    });
     return data;
+  },
+  computed: {
+    isLoaded: function() {
+      if(this.oldItem.hasOwnProperty('orgName')) {
+        return true;
+      }
+      return false;
+    }
   },
   methods: {
     handleSubmit() {
-      
-      
-      if(this.item.orgName && this.item.title && this.item.description && this.item.orgLink && this.item.repeating && this.item.start && this.item.end && this.item.date && this.item.location) {
+      if(this.item.title && this.item.description &&
+         this.item.repeating &&
+         this.item.start && this.item.end &&
+         this.item.date && this.item.location) {
+        data.oldItem.events.push(this.item);
         var params = {
-          TableName: 'Events',
-          Item: data.item
+          TableName: 'OrganizationEvents',
+          Item: data.oldItem
         };
     
         docClient.put(params, function(err, newData) {
           if (err) {
             console.log("Error", err);
           } else {
+            this.item = {};
             router.push({ path: '/client/event' });
           }
         });
       }
 
       this.errors = [];
-      if(!this.item.orgName) this.errors.push("Orginization name required.");
       if(!this.item.title) this.errors.push("Title required.");
       if(!this.item.description) this.errors.push("Description required.");
-      if(!this.item.orgLink) this.errors.push("Orginization Link required.");
       if(!this.item.repeating) this.errors.push("Repeating required.");
       if(!this.item.start) this.errors.push("Start required.");
       if(!this.item.end) this.errors.push("End required.");
@@ -41,6 +66,7 @@ export default {
 };
 
 let data = {
-  item: {id: 5},
-  errors: []
+  item: {},
+  errors: [],
+  oldItem: {}
 };

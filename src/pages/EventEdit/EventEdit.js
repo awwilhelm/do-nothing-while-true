@@ -4,14 +4,10 @@ import docClient from '@/services/aws.js';
 export default {
   data: function() {
     var params = {
-      ExpressionAttributeValues: {
-        ':i': 69
-       },
-      TableName: 'Events',
+      TableName: 'OrganizationEvents',
       Key: {
-        "id": 69,
+        "username": this.$cookies.get("username")
       }
-      
     };
 
     docClient.get(params, function(err, newData) {
@@ -24,13 +20,25 @@ export default {
     });
     return data;
   },
+  computed: {
+    isLoaded: function() {
+      if(this.item.hasOwnProperty('orgName')) {
+        return true;
+      }
+      return false;
+    }
+  },
   methods: {
     handleSubmit() {
-      if(this.item.orgName && this.item.title && this.item.description &&
-         this.item.orgLink && this.item.repeating && this.item.start && 
-         this.item.end && this.item.date && this.item.location) {
+      if(this.item.events[this.$route.params.eventid].title && this.item.events[this.$route.params.eventid].description &&
+         this.item.events[this.$route.params.eventid].repeating && this.item.events[this.$route.params.eventid].start && 
+         this.item.events[this.$route.params.eventid].end && this.item.events[this.$route.params.eventid].date &&
+         this.item.events[this.$route.params.eventid].location) {
         var params = {
-          TableName: 'Events',
+          TableName: 'OrganizationEvents',
+          Key: {
+            "username": this.$cookies.get("username")
+          },
           Item: data.item
         };
     
@@ -43,15 +51,13 @@ export default {
         });
       }
       this.errors = [];
-      if(!this.item.orgName) this.errors.push("Orginization name required.");
-      if(!this.item.title) this.errors.push("Title required.");
-      if(!this.item.description) this.errors.push("Description required.");
-      if(!this.item.orgLink) this.errors.push("Orginization Link required.");
-      if(!this.item.repeating) this.errors.push("Repeating required.");
-      if(!this.item.start) this.errors.push("Start required.");
-      if(!this.item.end) this.errors.push("End required.");
-      if(!this.item.date) this.errors.push("Date required.");
-      if(!this.item.location) this.errors.push("Location required.");
+      if(!this.item.events[this.$route.params.eventid].title) this.errors.push("Title required.");
+      if(!this.item.events[this.$route.params.eventid].description) this.errors.push("Description required.");
+      if(!this.item.events[this.$route.params.eventid].repeating) this.errors.push("Repeating required.");
+      if(!this.item.events[this.$route.params.eventid].start) this.errors.push("Start required.");
+      if(!this.item.events[this.$route.params.eventid].end) this.errors.push("End required.");
+      if(!this.item.events[this.$route.params.eventid].date) this.errors.push("Date required.");
+      if(!this.item.events[this.$route.params.eventid].location) this.errors.push("Location required.");
     }
   }
 };

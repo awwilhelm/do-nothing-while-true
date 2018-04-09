@@ -1,7 +1,5 @@
 <template>
   <div>
-    <div>TableList</div>
-    <br />
     <div class="view-events">
       <table class="table table-hover events-table">
         <thead>
@@ -12,8 +10,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in message" :key="`item-${index}`" v-on:click="viewItem(item.id)">
-            <td>{{item.orgName}}</td>
+          <tr v-for="(item, index) in message.events" :key="`item-${index}`" v-on:click="viewItem(index)">
+            <td>{{item.title}}</td>
             <td>{{item.date.toString()}}</td>
             <td>{{item.start}}</td>
           </tr>

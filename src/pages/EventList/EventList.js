@@ -16,21 +16,27 @@ export default {
   },
   data: function() {
     var params = {
-      TableName: 'Events',
+      TableName: 'OrganizationEvents',
+      Key: {
+        "username": this.$cookies.get("username")
+      }
       
     };
 
-    docClient.scan(params, function(err, newData) {
+    data.login.username = this.$cookies.get("username");
+    data.login.password = this.$cookies.get("password");
+
+    
+    
+    docClient.get(params, function(err, newData) {
       if (err) {
         console.log("Error", err);
       } else {
-        data.eventList = newData.Items;
-        console.log(data);
+        data.eventList = newData.Item;
+        console.log(data.eventList.events);
       }
     });
 
-    data.login.username = this.$cookies.get("username");
-    data.login.password = this.$cookies.get("password");
     return data;
   }
 };

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="header">
-      <img class="logo" src="./assets/logo.png">
+      <img class="logo" src="./assets/finalLogo.png">
       <button v-show="[''].indexOf($route.name) <= -1" class="btn logout" v-on:click="logout()"> Logout </button>
     </div>
     <router-view/>
@@ -36,6 +36,7 @@ html {
   left: 20px;
   top: 20px;
   height: 100px;
+  margin: 10px;
 }
 .logout {
   height: 30px;

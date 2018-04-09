@@ -8,16 +8,13 @@
         </ul>
       </p>
       <div>
-        <span>Orginization Name: </span> <input v-model="item.orgName"/>
+        <span>Orginization Name: </span> <div>{{item.orgName}} </div>
       </div>
       <div>
         <span>Title</span> <input v-model="item.title"/>
       </div>
       <div>
         <span>Description</span> <input v-model="item.description"/>
-      </div>
-      <div>
-        <span>Orginization Link</span> <input v-model="item.orgLink"/>
       </div>
       <div>
         <span>Repeating</span> <input v-model="item.repeating"/>
