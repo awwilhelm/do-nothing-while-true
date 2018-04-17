@@ -62,7 +62,7 @@ const router = new Router({
     {
       path: '/user/speak',
       name: 'User Input',
-      component: EventEdit,
+      component: Speak,
     },
 
   ],
