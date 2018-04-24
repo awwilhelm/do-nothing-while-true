@@ -14,6 +14,7 @@
             <td>{{item.title}}</td>
             <td>{{item.date.toString()}}</td>
             <td>{{item.start}}</td>
+            
           </tr>
         </tbody>
       </table>

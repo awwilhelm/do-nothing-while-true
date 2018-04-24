@@ -38,6 +38,7 @@
         <span>Location</span> <input v-model="item.events[eventid].location"/>
       </div>
       <button class="btn-primary" type="submit">Submit</button>
+      <button class="btn btn-danger" v-on:click="deleteEvent(item, eventid)">Delete</button>
     </form>
   </div>
 </template>

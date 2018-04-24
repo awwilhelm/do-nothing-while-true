@@ -20,7 +20,6 @@ export default {
         console.log("Error", err);
       } else {
         data.oldItem = newData.Item;
-        console.log(data);
       }
     });
     return data;
@@ -57,7 +56,6 @@ export default {
           }
         });
       }
-      console.log('here');
       this.errors = [];
       if(!this.item.title) this.errors.push("Title required.");
       if(!this.item.description) this.errors.push("Description required.");

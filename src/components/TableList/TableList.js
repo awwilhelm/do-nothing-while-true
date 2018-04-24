@@ -1,6 +1,7 @@
 import router from '@/router/index.js';
 import EventEdit from '@/pages/EventEdit/EventEdit.vue';
 import EventCreate from '@/pages/EventCreate/EventCreate.vue';
+import docClient from '@/services/aws.js';
 import Vue from 'vue';
 import VModal from 'vue-js-modal';
 
@@ -20,18 +21,17 @@ export default {
   },
   methods: {
     viewItem: function (id) {
-      console.log(id);
       //router.push({ path: `/client/event/${id}/edit` });
       this.$modal.show('edit-event', {eventid: id});
     },
     beforeOpen (event) {
-      console.log(event)
       // Set the opening time of the modal
       this.eventid = event.params.eventid;
     },
     beforeClose (event) {
       
     },
+    
   },
   
 };

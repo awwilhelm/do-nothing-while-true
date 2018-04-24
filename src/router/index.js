@@ -80,8 +80,6 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log(from);
-  console.log(to);
   const authRequired = to.matched.some((route) => route.meta.auth);
 
   if(authRequired) {

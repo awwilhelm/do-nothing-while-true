@@ -19,7 +19,6 @@ export default {
         console.log("Error", err);
       } else {
         data.item = newData.Item;
-        console.log(data);
       }
     });
     return data;
@@ -52,8 +51,8 @@ export default {
             console.log("Error", err);
           } else {
             router.push({ path: '/client/event' });
-            location.reload();
-            tempThis.$modal.hide('edit-event');
+            //location.reload();
+            //tempThis.$modal.hide('edit-event');
           }
         });
       }
@@ -65,7 +64,27 @@ export default {
       if(!this.item.events[this.eventid].end) this.errors.push("End required.");
       if(!this.item.events[this.eventid].date) this.errors.push("Date required.");
       if(!this.item.events[this.eventid].location) this.errors.push("Location required.");
-    }
+    },
+    deleteEvent(item, eventid) {
+      item.events.splice(eventid, 1);
+      var params = {
+        TableName: 'OrganizationEvents',
+        Key: {
+          "username": this.$cookies.get("username")
+        },
+        Item: item
+      };
+  
+      docClient.put(params, function(err, newData) {
+        if (err) {
+          console.log("Error", err);
+        } else {
+          // router.push({ path: '/client/event' });
+          location.reload();
+          // tempThis.$modal.hide('edit-event');
+        }
+      });
+    },
   }
 };
 

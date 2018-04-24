@@ -38,7 +38,6 @@ export default {
         console.log("Error", err);
       } else {
         data.eventList = newData.Item;
-        console.log(data.eventList.events);
       }
     });
 

@@ -3,7 +3,6 @@ import docClient from '@/services/aws.js';
 import axios from 'axios';
 
 let convertToMin = function(hour, min) {
-  console.log(parseInt(hour) + " " + parseInt(min));
   return parseInt(hour)*60 + parseInt(min);
 }
 var timeoutHolder = null;
@@ -19,13 +18,12 @@ export default {
   },
   mounted: function() {
     let currentThis = this;
+    let lastTime = Date.now();
     this.twoSecondsTimerEvents = setInterval(function(){ 
       axios.get('https://xskdpwagbe.execute-api.us-east-1.amazonaws.com/prod').then((response) => {
         let time = new Date();
-        console.log(response.data.data.Item);
-        console.log(Date.now() - response.data.data.Item.current_time);
-        if(response.data.data.Item.display_name != currentThis.results.display_name) {
-          console.log('here');
+        if(response.data.data.Item.display_name != currentThis.results.display_name || lastTime != response.data.data.Item.current_time) {
+          lastTime = response.data.data.Item.current_time;
           currentThis.iterations = 1;
           currentThis.results = response.data.data.Item;
           $("#slider").stop();
@@ -42,8 +40,6 @@ export default {
     }, 5000);
     axios.get('https://xskdpwagbe.execute-api.us-east-1.amazonaws.com/prod').then((response) => {
       let time = new Date();
-      console.log(response.data.data.Item);
-      console.log(Date.now() - response.data.data.Item.current_time);
       currentThis.results = response.data.data.Item;
       //Open Mister Truman
       //is rollins open
@@ -57,7 +53,6 @@ export default {
     // 'prepareToExit' method not required here
     // And also there is no need to handle 'beforeRouteLeave' in parent
   beforeDestroy: function() {
-      console.log("Stopping the interval timer")
       clearInterval(this.twoSecondsTimerEvents)
   }
 };
@@ -104,14 +99,9 @@ function startCycle(slider,sliderHeight,itemHeight,startPos,currentThis) {
         scrollItems(slider,sliderHeight,itemHeight,startPos, currentThis);
     //}, 2000);
   }, 2000);
-  console.log(timeoutHolder);
 }
 
 function scrollItems(container, targetsHeight, increment, startPos, currentThis) {
-  if(parseInt(container.css('top'))*-1 > (container.height()-300))
-  {
-    console.log("yessss");
-  }
   var secs = 20 * 1000;
   container.stop();
   container.animate({
