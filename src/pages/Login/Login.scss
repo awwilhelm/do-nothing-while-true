@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  color: white;
+}
+.submit {
+  margin: 10px 0px;
+  width: 100%;
+  background: #62a9e2;
+  color: white;
+}

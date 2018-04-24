@@ -102,7 +102,7 @@ function startCycle(slider,sliderHeight,itemHeight,startPos,currentThis) {
 }
 
 function scrollItems(container, targetsHeight, increment, startPos, currentThis) {
-  var secs = 20 * 1000;
+  var secs = (2000000)/targetsHeight;
   container.stop();
   container.animate({
       'top': '-' + (targetsHeight-500) + 'px'

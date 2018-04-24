@@ -37,8 +37,10 @@
       <div class="individual-formatting" v-if="isLoaded">
         <span>Location</span> <input v-model="item.events[eventid].location"/>
       </div>
-      <button class="btn-primary" type="submit">Submit</button>
-      <button class="btn btn-danger" v-on:click="deleteEvent(item, eventid)">Delete</button>
+      <div class="btn-container">
+        <button class="btn btn-primary" type="submit">Submit</button>
+        <button class="btn btn-danger" v-on:click="deleteEvent(item, eventid)">Delete</button>
+      </div>
     </form>
   </div>
 </template>
