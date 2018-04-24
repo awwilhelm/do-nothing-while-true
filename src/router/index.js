@@ -18,21 +18,25 @@ const router = new Router({
     {
       path: '/user',
       name: '',
+      noLogo: '',
       component: Speak,
     },
     {
       path: '/user/help',
       name: '',
+      noLogo: '',
       component: Help,
     },
     {
       path: '/user/speakresult',
       name: '',
+      noLogo: '',
       component: SpeakResult,
     },
     {
       path: '/client/login',
       name: '',
+      noLogo: '',
       component: Login,
     },
     {
@@ -41,6 +45,7 @@ const router = new Router({
       component: EventList,
       meta: {
         auth: true,
+        noLogo: '',
       },
     },
     {
@@ -49,6 +54,7 @@ const router = new Router({
       component: EventCreate,
       meta: {
         auth: true,
+        noLogo: '',
       },
     },
     {
@@ -57,12 +63,16 @@ const router = new Router({
       component: EventEdit,
       meta: {
         auth: true,
+        noLogo: '',
       },
     },
     {
       path: '/user/speak',
-      name: 'User Input',
+      name: '',
       component: Speak,
+      meta: {
+        noLogo: 'noLogo',
+      },
     },
 
   ],

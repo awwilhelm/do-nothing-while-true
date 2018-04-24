@@ -1,8 +1,8 @@
 <template>
-  <div id="app">
+  <div id="app" class="background">
     <div class="header">
-      <img class="logo" src="./assets/finalLogo.png">
-      <button v-show="[''].indexOf($route.name) <= -1" class="btn logout" v-on:click="logout()"> Logout </button>
+      <img v-show="[''].indexOf($route.meta.noLogo) > -1" class="logo" src="./assets/rawlogo2.png">
+      <button v-show="[''].indexOf($route.name) <= -1" class="btn btn-info" v-on:click="logout()"> Logout </button>
     </div>
     <router-view/>
   </div>
@@ -23,8 +23,13 @@ export default {
 </script>
 
 <style>
-html {
-  /* background: #868686; */
+html, body {
+  height: 100vh;
+  background: #1e5799;
+  background: -moz-linear-gradient(top, #1e5799 0%, #2989d8 44%, #7db9e8 100%);
+  background: -webkit-linear-gradient(top, #1e5799 0%,#2989d8 44%,#7db9e8 100%); 
+  background: linear-gradient(to bottom, #1e5799 0%,#2989d8 44%,#7db9e8 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=0 );
 }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

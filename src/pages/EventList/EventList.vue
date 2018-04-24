@@ -1,7 +1,10 @@
 <template>
   <div>
+    <div class="orgName">{{eventList.orgName}}</div>
     <table-list :message="eventList"></table-list>
-    <button v-on:click="createEvent()">Create Event</button>
+    <!-- use the modal component, pass in the prop -->
+    
+    
   </div>
 </template>
 

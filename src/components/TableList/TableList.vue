@@ -17,7 +17,17 @@
           </tr>
         </tbody>
       </table>
+      <button class="btn btn-primary" id="show-modal" @click="$modal.show('create-event')">Create Event</button>
     </div>
+    
+
+    <modal height="auto" name="create-event">
+      <event-create />
+    </modal>
+    
+    <modal height="auto" name="edit-event" @before-open="beforeOpen" @before-close="beforeClose">
+      <event-edit :eventid=eventid />
+    </modal>
   </div>
 </template>
 

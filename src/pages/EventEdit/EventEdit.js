@@ -1,7 +1,11 @@
 import router from '@/router/index.js';
 import docClient from '@/services/aws.js';
+import Vue from 'vue';
+import VModal from 'vue-js-modal';
 
 export default {
+  name: 'eventedit',
+  props: ['eventid'],
   data: function() {
     var params = {
       TableName: 'OrganizationEvents',
@@ -30,10 +34,11 @@ export default {
   },
   methods: {
     handleSubmit() {
-      if(this.item.events[this.$route.params.eventid].title && this.item.events[this.$route.params.eventid].description &&
-         this.item.events[this.$route.params.eventid].repeating && this.item.events[this.$route.params.eventid].start && 
-         this.item.events[this.$route.params.eventid].end && this.item.events[this.$route.params.eventid].date &&
-         this.item.events[this.$route.params.eventid].location) {
+      let tempThis = this;
+      if(this.item.events[this.eventid].title && this.item.events[this.eventid].description &&
+         this.item.events[this.eventid].repeating && this.item.events[this.eventid].start && 
+         this.item.events[this.eventid].end && this.item.events[this.eventid].date &&
+         this.item.events[this.eventid].location) {
         var params = {
           TableName: 'OrganizationEvents',
           Key: {
@@ -47,17 +52,19 @@ export default {
             console.log("Error", err);
           } else {
             router.push({ path: '/client/event' });
+            location.reload();
+            tempThis.$modal.hide('edit-event');
           }
         });
       }
       this.errors = [];
-      if(!this.item.events[this.$route.params.eventid].title) this.errors.push("Title required.");
-      if(!this.item.events[this.$route.params.eventid].description) this.errors.push("Description required.");
-      if(!this.item.events[this.$route.params.eventid].repeating) this.errors.push("Repeating required.");
-      if(!this.item.events[this.$route.params.eventid].start) this.errors.push("Start required.");
-      if(!this.item.events[this.$route.params.eventid].end) this.errors.push("End required.");
-      if(!this.item.events[this.$route.params.eventid].date) this.errors.push("Date required.");
-      if(!this.item.events[this.$route.params.eventid].location) this.errors.push("Location required.");
+      if(!this.item.events[this.eventid].title) this.errors.push("Title required.");
+      if(!this.item.events[this.eventid].description) this.errors.push("Description required.");
+      if(!this.item.events[this.eventid].repeating) this.errors.push("Repeating required.");
+      if(!this.item.events[this.eventid].start) this.errors.push("Start required.");
+      if(!this.item.events[this.eventid].end) this.errors.push("End required.");
+      if(!this.item.events[this.eventid].date) this.errors.push("Date required.");
+      if(!this.item.events[this.eventid].location) this.errors.push("Location required.");
     }
   }
 };

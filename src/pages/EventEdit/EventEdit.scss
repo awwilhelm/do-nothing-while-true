@@ -1,0 +1,12 @@
+.overall-formatting {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  margin: 10px 100px;
+}
+.individual-formatting {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  margin: 5px;
+}

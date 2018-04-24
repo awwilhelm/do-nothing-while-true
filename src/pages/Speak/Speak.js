@@ -8,6 +8,8 @@ let convertToMin = function(hour, min) {
   console.log(parseInt(hour) + " " + parseInt(min));
   return parseInt(hour)*60 + parseInt(min);
 }
+var timeoutHolder = null;
+var intervalHolder = null;
 
 export default {
   data: function() {
@@ -26,8 +28,14 @@ export default {
         console.log(Date.now() - response.data.data.Item.current_time);
         if(response.data.data.Item.display_name != currentThis.results.display_name) {
           console.log('here');
+          currentThis.iterations = 1;
           currentThis.results = response.data.data.Item;
-          setTimeout(cycle, 0);
+          console.log(intervalHolder);
+          console.log(timeoutHolder);
+          clearInterval(intervalHolder);
+          clearTimeout(timeoutHolder);
+          $('#slider').css('top', '0px');
+          //setTimeout(function(){cycle(currentThis)}, 200);
         }
         //Open Mister Truman
         //is rollins open
@@ -38,11 +46,11 @@ export default {
       let time = new Date();
       console.log(response.data.data.Item);
       console.log(Date.now() - response.data.data.Item.current_time);
-      this.results = response.data.data.Item;
+      currentThis.results = response.data.data.Item;
       //Open Mister Truman
       //is rollins open
       //what restaurants are open
-      setTimeout(cycle, 0);
+      setTimeout(function(){cycle(currentThis)}, 0);
     });
 
   $('#slider').css('position', 'absolute');
@@ -59,11 +67,12 @@ export default {
 let twoSecondsTimerEvents;
 
 let data = {
+  iterations: 1,
   results: {},
   menu: "Bubble Tea, Fountain Beverage, Hot Tea, Iced Tea, Ramune Soda, Reed's Ginger Brew, Coconut Pecan Cookies (2), Ginger Molasses Cookies (2), Build Your Own Rice Bowl, Chicken Satay, Firecracker Pork, Lettuce Wraps, Sweet Chili Chicken, Thai Chicken Curry, Sabai Salad, Shrimp Spring Rolls, Brown Rice, Cucumber Salad, Daikon Slaw, Fried Pork Roll (1), Fried Rice, Fried Vegetable Roll(1), Ginger Crab Wonton (2), Green Beans, Jasmine Rice, Kimchee, Korean Slaw, Sweet Potatoes, Drunken Noodles, Korean Tacos, Ramen Bowl, Sabai Noodle Bowl, Shrimp Red Curry, Tofu Red Curry".split(', ')
 };
 
-function cycle() {
+function cycle(currentThis) {
   var startTime = +new Date();
   //$('#container').css('overflow', 'hidden');
   
@@ -74,15 +83,22 @@ function cycle() {
       itemHeight = items.height();
   var startPos = slider.css('top');
 
-  startCycle(slider,sliderHeight,itemHeight,startPos);
+  if (sliderHeight <= 550) {
+    currentThis.iterations = 1;
+  } else {
+    currentThis.iterations = currentThis.results.iterations
+  }
+  if(currentThis.iterations>1) {
+    startCycle(slider,sliderHeight,itemHeight,startPos);
+  }
 }
 
 function startCycle(slider,sliderHeight,itemHeight,startPos) {
-  setTimeout(() => {
+  timeoutHolder = setTimeout(() => {
     //scrollItems(slider,sliderHeight,itemHeight,startPos);
     // var endTime = +new Date();
     // var diff = endTime - startTime;
-    setInterval(function(){ 
+    intervalHolder = setInterval(function(){ 
         scrollItems(slider,sliderHeight,itemHeight,startPos);
     }, 2000);
   }, 2000);

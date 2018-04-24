@@ -1,7 +1,11 @@
 import router from '@/router/index.js';
 import docClient from '@/services/aws.js';
 
+import Vue from 'vue';
+import VModal from 'vue-js-modal';
+
 export default {
+  name: 'eventcreate',
   data: function() {
     data.item = {};
     var params = {
@@ -31,6 +35,7 @@ export default {
   },
   methods: {
     handleSubmit() {
+      let tempThis = this;
       if(this.item.title && this.item.description &&
          this.item.repeating &&
          this.item.start && this.item.end &&
@@ -47,10 +52,12 @@ export default {
           } else {
             this.item = {};
             router.push({ path: '/client/event' });
+            tempThis.$modal.hide('create-event');
+            location.reload();
           }
         });
       }
-
+      console.log('here');
       this.errors = [];
       if(!this.item.title) this.errors.push("Title required.");
       if(!this.item.description) this.errors.push("Description required.");
@@ -59,7 +66,7 @@ export default {
       if(!this.item.end) this.errors.push("End required.");
       if(!this.item.date) this.errors.push("Date required.");
       if(!this.item.location) this.errors.push("Location required.");
-
+        
 
     }
   }

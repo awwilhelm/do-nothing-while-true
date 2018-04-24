@@ -1,17 +1,22 @@
 import TableList from '@/components/TableList/TableList.vue';
+import EventCreate from '@/pages/EventCreate/EventCreate.vue';
+import EventEdit from '@/pages/EventEdit/EventEdit.vue';
 import router from '@/router/index.js';
 import docClient from '@/services/aws.js';
+import Vue from 'vue';
+import VModal from 'vue-js-modal';
+
+Vue.use(VModal);
 
 export default {
   components: {
     TableList,
+    EventCreate,
+    EventEdit,
   },
   methods: {
-    createEvent: function () {
-      router.push({ path: '/client/event/create' });
-    },
     viewEvent: function (id) {
-      router.push({ path: `/client/event/${id}/edit` });
+      //router.push({ path: `/client/event/${id}/edit` });
     }
   },
   data: function() {
@@ -43,7 +48,8 @@ export default {
 
 let data = {
   eventList: [],
-  login: {}
+  login: {},
+  showModal: false,
 };
 
 
