@@ -3,8 +3,6 @@
     <!-- <div v-for="(item, index) in results.json" :key="`results-${index}`">
       <span>{{item.name}}</span>
     </div> -->
-
-    <button v-on:click="stop()">stop</button>
     <div v-if="false" class="landing-page">
       <div class="logo-container">
         <img class="logo" src="../../assets/rawlogo2.png">

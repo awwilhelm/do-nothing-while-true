@@ -16,10 +16,6 @@ export default {
   components: {
   },
   methods: {
-    stop: function() {
-      $("#slider").stop();
-      $("#slider").css('top', '0px');
-    }
   },
   mounted: function() {
     let currentThis = this;
