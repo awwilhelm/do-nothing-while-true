@@ -2,8 +2,6 @@ import router from '@/router/index.js';
 import docClient from '@/services/aws.js';
 import axios from 'axios';
 
-  
-
 let convertToMin = function(hour, min) {
   console.log(parseInt(hour) + " " + parseInt(min));
   return parseInt(hour)*60 + parseInt(min);
@@ -18,6 +16,10 @@ export default {
   components: {
   },
   methods: {
+    stop: function() {
+      $("#slider").stop();
+      $("#slider").css('top', '0px');
+    }
   },
   mounted: function() {
     let currentThis = this;
@@ -30,12 +32,11 @@ export default {
           console.log('here');
           currentThis.iterations = 1;
           currentThis.results = response.data.data.Item;
-          console.log(intervalHolder);
-          console.log(timeoutHolder);
-          clearInterval(intervalHolder);
-          clearTimeout(timeoutHolder);
-          $('#slider').css('top', '0px');
-          //setTimeout(function(){cycle(currentThis)}, 200);
+          $("#slider").stop();
+          window.clearInterval(intervalHolder);
+          window.clearTimeout(timeoutHolder);
+          $("#slider").css('top', '0px');
+          setTimeout(function(){cycle(currentThis)}, 200);
         }
         //Open Mister Truman
         //is rollins open
@@ -102,6 +103,7 @@ function startCycle(slider,sliderHeight,itemHeight,startPos) {
         scrollItems(slider,sliderHeight,itemHeight,startPos);
     }, 2000);
   }, 2000);
+  console.log(timeoutHolder);
 }
 
 function scrollItems(container, targetsHeight, increment, startPos) {
@@ -110,6 +112,7 @@ function scrollItems(container, targetsHeight, increment, startPos) {
     console.log("yessss");
   }
   var secs = 70 * 1000;
+  container.stop();
   container.animate({
       'top': '-' + (2000) + 'px'
   }, secs, 'linear', function () {
