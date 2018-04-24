@@ -3,7 +3,7 @@
     <!-- <div v-for="(item, index) in results.json" :key="`results-${index}`">
       <span>{{item.name}}</span>
     </div> -->
-    <div v-if="false" class="landing-page">
+    <div v-if="mainScreen" class="landing-page">
       <div class="logo-container">
         <img class="logo" src="../../assets/rawlogo2.png">
       </div>
@@ -23,7 +23,7 @@
                 </div>
               </ul> -->
               <div class="multiple-overview">
-                <div class="full-width" v-for="n in iterations" :key="`iterations-${n}`">
+                <div class="full-width" v-for="n in 1" :key="`iterations-${n}`">
                   <div class="all-hours-if" v-if="results.display_id == 0">
                     <div class="all-hours">
                       <div class="slide-handler" v-for="(item, index) in results.json" :key="`all-hours-${index}`">

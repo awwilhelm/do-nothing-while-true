@@ -33,6 +33,7 @@ export default {
           window.clearTimeout(timeoutHolder);
           $("#slider").css('top', '0px');
           setTimeout(function(){cycle(currentThis)}, 200);
+          currentThis.mainScreen = false;
         }
         //Open Mister Truman
         //is rollins open
@@ -65,6 +66,7 @@ let twoSecondsTimerEvents;
 
 let data = {
   iterations: 1,
+  mainScreen: true,
   results: {},
   menu: "Bubble Tea, Fountain Beverage, Hot Tea, Iced Tea, Ramune Soda, Reed's Ginger Brew, Coconut Pecan Cookies (2), Ginger Molasses Cookies (2), Build Your Own Rice Bowl, Chicken Satay, Firecracker Pork, Lettuce Wraps, Sweet Chili Chicken, Thai Chicken Curry, Sabai Salad, Shrimp Spring Rolls, Brown Rice, Cucumber Salad, Daikon Slaw, Fried Pork Roll (1), Fried Rice, Fried Vegetable Roll(1), Ginger Crab Wonton (2), Green Beans, Jasmine Rice, Kimchee, Korean Slaw, Sweet Potatoes, Drunken Noodles, Korean Tacos, Ramen Bowl, Sabai Noodle Bowl, Shrimp Red Curry, Tofu Red Curry".split(', ')
 };
@@ -82,36 +84,42 @@ function cycle(currentThis) {
 
   if (sliderHeight <= 550) {
     currentThis.iterations = 1;
+    setTimeout(() => {
+      currentThis.mainScreen = true;
+    }, 5000);
   } else {
     currentThis.iterations = currentThis.results.iterations
   }
   if(currentThis.iterations>1) {
-    startCycle(slider,sliderHeight,itemHeight,startPos);
+    startCycle(slider,sliderHeight,itemHeight,startPos, currentThis);
   }
 }
 
-function startCycle(slider,sliderHeight,itemHeight,startPos) {
+function startCycle(slider,sliderHeight,itemHeight,startPos,currentThis) {
   timeoutHolder = setTimeout(() => {
     //scrollItems(slider,sliderHeight,itemHeight,startPos);
     // var endTime = +new Date();
     // var diff = endTime - startTime;
-    intervalHolder = setInterval(function(){ 
-        scrollItems(slider,sliderHeight,itemHeight,startPos);
-    }, 2000);
+    //intervalHolder = setInterval(function(){ 
+        scrollItems(slider,sliderHeight,itemHeight,startPos, currentThis);
+    //}, 2000);
   }, 2000);
   console.log(timeoutHolder);
 }
 
-function scrollItems(container, targetsHeight, increment, startPos) {
+function scrollItems(container, targetsHeight, increment, startPos, currentThis) {
   if(parseInt(container.css('top'))*-1 > (container.height()-300))
   {
     console.log("yessss");
   }
-  var secs = 70 * 1000;
+  var secs = 20 * 1000;
   container.stop();
   container.animate({
-      'top': '-' + (2000) + 'px'
+      'top': '-' + (targetsHeight-500) + 'px'
   }, secs, 'linear', function () {
       container.css('top', startPos);
-  });
+  }).promise()
+  .done(function(){
+    currentThis.mainScreen = true;
+  });;
 }
